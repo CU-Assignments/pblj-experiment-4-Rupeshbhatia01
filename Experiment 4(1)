@@ -1,0 +1,87 @@
+import java.util.*;
+
+// Class representing a Card
+class Card {
+    private String symbol;
+    private String value;
+
+    public Card(String symbol, String value) {
+        this.symbol = symbol;
+        this.value = value;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" + "symbol='" + symbol + '\'' + ", value='" + value + '\'' + '}';
+    }
+}
+
+// Class to manage the collection of cards
+class CardCollection {
+    private Collection<Card> cards;
+
+    public CardCollection() {
+        cards = new ArrayList<>();
+    }
+
+    // Method to add a card
+    public void addCard(String symbol, String value) {
+        cards.add(new Card(symbol, value));
+    }
+
+    // Method to find all cards with a given symbol
+    public List<Card> findCardsBySymbol(String symbol) {
+        List<Card> result = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getSymbol().equalsIgnoreCase(symbol)) {
+                result.add(card);
+            }
+        }
+        return result;
+    }
+
+    // Method to display all cards
+    public void displayAllCards() {
+        for (Card card : cards) {
+            System.out.println(card);
+        }
+    }
+}
+
+public class CardManager {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CardCollection collection = new CardCollection();
+
+        // Adding sample cards
+        collection.addCard("Heart", "Ace");
+        collection.addCard("Spade", "King");
+        collection.addCard("Diamond", "Queen");
+        collection.addCard("Heart", "10");
+        collection.addCard("Club", "Jack");
+
+        // User input for finding cards
+        System.out.print("Enter a symbol to search for: ");
+        String searchSymbol = scanner.nextLine();
+        List<Card> foundCards = collection.findCardsBySymbol(searchSymbol);
+
+        if (foundCards.isEmpty()) {
+            System.out.println("No cards found for symbol: " + searchSymbol);
+        } else {
+            System.out.println("Cards found: ");
+            for (Card card : foundCards) {
+                System.out.println(card);
+            }
+        }
+
+        scanner.close();
+    }
+}
